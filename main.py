@@ -24,7 +24,7 @@ def getAllDirsFromRep(rep):
 def getFileFromName(name):
     result = []
     try:
-        for root, dirs, files in os.walk("/"):
+        for root, dirs, files in os.walk('/'):
             dirs[:] = [d for d in dirs if d not in forbiddenDir]
 
             for file in files:
@@ -36,7 +36,7 @@ def getFileFromName(name):
     except PermissionError:
         pass
     return result
-#print(getFileFromName("main.py"))
+#print(getFileFromName('main.py'))
 
 # Recherche d'un mot-clé dans un fichier (lecture ligne par ligne pour économiser de la mémoire)
 def search_in_file(file_path, keyword):
@@ -75,7 +75,7 @@ def search_in_file_with_rank(file_path, keyword):
                     matches.extend(re.findall(r'\b' + re.escape(low_key) + r'\w*', low_line))
         
         for word in os.path.basename(file_path).split():
-            if os.path.basename(file_path).split(".") and (os.path.basename(file_path).split(".")[-1] in forbiddenTypes):
+            if os.path.basename(file_path).split('.') and (os.path.basename(file_path).split('.')[-1] in forbiddenTypes):
                 return 0
             result += scoringUni(low_key, word)
 
@@ -96,7 +96,7 @@ def search_in_file_with_rank(file_path, keyword):
 def getFileFromKeyWord(keyword):
     result = []
     try:
-        for root, dirs, files in os.walk("/"):
+        for root, dirs, files in os.walk('/'):
             dirs[:] = [d for d in dirs if d not in forbiddenDir]
 
             for file in files:
@@ -106,14 +106,14 @@ def getFileFromKeyWord(keyword):
     except PermissionError:
         pass
     return result
-#print(getFileFromKeyWord("timedFunction"))
+#print(getFileFromKeyWord('timedFunction'))
 
 # fonction pour rechercher avec ranking
 @timedFunction
 def getFileFromKeyWordWithRank(keyword):
     result = []
     try:
-        for root, dirs, files in os.walk("/"):
+        for root, dirs, files in os.walk('/'):
             dirs[:] = [
                 d for d in dirs
                 if not any(forbidden in os.path.join(root, d) for forbidden in forbiddenDir)
@@ -127,4 +127,4 @@ def getFileFromKeyWordWithRank(keyword):
         pass
 
     return rankResult(result), len(result)
-print(getFileFromKeyWordWithRank("rank"))
+print(getFileFromKeyWordWithRank('rank'))
