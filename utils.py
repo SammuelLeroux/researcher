@@ -1,7 +1,7 @@
 import time
 
-forbiddenDir = ["site-packages", "tmp", "var", ".git", "sdk", "node_modules", "vendor", "__pycache__", ".npm", ".cache", "bin", "build", "_build", "dist", "x86_64", "debug", ".config", ".gradle", ".svn", ".idea", ".vscode", ".DS_Store", "Thums.db", "proc", 'sys', "dev", "System32", "caches", "cache", "snap"]
-forbiddenTypes = ["sav", "vdi", "sst", "bin", "dill", "exe", "dll", "so", "out", "class", "apk", "mp4", "mp3", "avi", "mov", "wav", "iso", "img", "dmg", "filecache", "class", "jar", "lib"]
+forbiddenDir = ['site-packages', 'tmp', 'var', '.git', 'sdk', 'node_modules', 'vendor', '__pycache__', '.npm', '.cache', 'bin', 'build', '_build', 'dist', 'x86_64', 'debug', '.config', '.gradle', '.svn', '.idea', '.vscode', '.DS_Store', 'Thums.db', 'proc', 'sys', 'dev', 'System32', 'caches', 'cache', 'snap']
+forbiddenTypes = ['sav', 'vdi', 'sst', 'bin', 'dill', 'exe', 'dll', 'so', 'out', 'class', 'apk', 'mp4', 'mp3', 'avi', 'mov', 'wav', 'iso', 'img', 'dmg', 'filecache', 'class', 'jar', 'lib']
 
 def timedFunction(func):
     def wrapper(*args, **kwargs):
@@ -14,10 +14,10 @@ def timedFunction(func):
     return wrapper
 
 def fileToSkip(lookingFor, file):
-    if lookingFor.split(".")[-1] in forbiddenTypes: return True
+    if lookingFor.split('.')[-1] in forbiddenTypes: return True
 
     # si on recherche un fichier en fonction du nom et que on met un type, on peut skip ceux qui ne sont pas du meme type
-    if lookingFor.split(".")[-1] == file.split(".")[-1]:
+    if lookingFor.split('.')[-1] == file.split('.')[-1]:
         return False
     
     return True
@@ -37,7 +37,7 @@ def scoringUni(keyword, match):
     return result
 
 def humanReadable(file):
-    """Fonction pour vérifier si un fichier est lisible par un humain (texte)"""
+    '''Fonction pour vérifier si un fichier est lisible par un humain (texte)'''
     try:
         content = file.read(1024)  # Lire un petit morceau du fichier
         # Vérifier si tout le contenu est imprimable et ne contient pas de caractères binaires
