@@ -36,7 +36,7 @@ def count_letters(mot1, mot2, uniqueLettre=False):
 
     # Tri par ordre alphabétique
     compteur = dict(sorted(compteur.items()))
-    #print("Dictionnaire des lettres et fréquences :", compteur)
+    #print('Dictionnaire des lettres et fréquences :', compteur)
 
     result = []
     for lettre, count in compteur.items():
@@ -44,4 +44,45 @@ def count_letters(mot1, mot2, uniqueLettre=False):
     return result
 
 def distance_levenshtein(mot1, mot2):
-    return 0
+    if len(mot1) == 0 or len(mot2) == 0: return None
+
+    tab_mot1 = list(mot1)
+    tab_mot2 = list(mot2)
+
+    # Initialiasation
+    M = [['', ''] + tab_mot2]
+    M.append([''] + [a for a in range(len(tab_mot2) + 1)])
+    for i in range(len(tab_mot1)+2):
+        if (i > 1):
+            M.append([tab_mot1[i-2], i-1] + ([''] * len(tab_mot2)))
+
+    # récupérer les cases grisees
+    grey_case = []
+    for i in range(len(M)):
+        for j in range(len(M[0])):
+            if i > 1 and j > 1 and M[i][0] == M[0][j]:
+                grey_case.append((i,j))
+    
+    def find_grey(L, i,j):
+        left = L[i][j-1] + 1
+        up = L[i-1][j] + 1
+        diag = L[i-1][j-1]
+        return min(left, up, diag)
+    
+    def find_white(L, i,j):
+        left = L[i][j-1] + 1
+        up = L[i-1][j] + 1
+        diag = L[i-1][j-1] + 1
+        return min(left, up, diag)
+    
+    # remplir le tableau
+    for i in range(len(M)):
+        for j in range(len(M[0])):
+            if i > 1 and j > 1:
+                if (i,j) in grey_case:
+                    M[i][j] = find_grey(M, i, j)
+                else:
+                    M[i][j] = find_white(M, i, j)
+
+    # distance de Levenshtein est la valeur de la case en bas à droite
+    return M[len(M)-1][len(M[0])-1]
